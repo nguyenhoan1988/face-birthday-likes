@@ -1,8 +1,9 @@
 from facepy import GraphAPI
 from datetime import datetime
+import time
 
 # Your access token for your application on facebook
-access_token = ''
+access_token = input('Enter the access token:')
 
 graph = GraphAPI(access_token)
 
@@ -27,7 +28,8 @@ def like_post(post_id, actions):
         -------
             True if success; False otherwise
     """
-    result = graph.post(path='%s/likes' % post_id, actions=actions)
+    result = graph.post(path='%s/likes' % post_id, actions=actions, retry=10)
+    time.sleep(1)
     return result['success']
 
 def get_post(since_date, max_posts_num=1000):
